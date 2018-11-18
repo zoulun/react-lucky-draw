@@ -1,0 +1,74 @@
+.home {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: url('../../lib/images/bg.jpg') no-repeat;
+  background-size: cover;
+  font-size: 14px;
+  .create-lucky-draw-container,
+  .export-data-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .center-warpper {
+    padding: 20px 40px;
+    border: 1px solid #eee;
+    box-shadow: 0 0 3px 3px #ccc;
+    border-radius: 4px;
+    background: #fff;
+    .title {
+      text-align: center;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .form-list {
+      li {
+        margin-bottom: 20px;
+        label {
+          width: 105px;
+          display: inline-block;
+        }
+      }
+      .lucky-draw-name {
+        input {
+          width: 200px;
+          display: inline-block;
+        }
+      }
+      .import-data {
+        button {
+          position: relative;
+        }
+        .import-file {
+          position: absolute;
+          left: 0;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          cursor: pointer;
+        }
+      }
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      text-align: center;
+    }
+  }
+  .lucky-draw-container {
+    .lucky-draw-warpper {
+      padding: 40px;
+      .lucky-draw-title {
+        text-align: center;
+        color: #fff;
+        font-size: 18px;
+      }
+    }
+  }
+}
