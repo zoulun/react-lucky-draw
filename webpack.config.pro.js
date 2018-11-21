@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const uglifyjs = require('uglifyjs-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const NODE_ENV = process.env.NODE_ENV || 'production';
@@ -95,6 +95,9 @@ module.exports = {
           minChunks: 2
         }
       }
-    }
+    },
+    minimizer: [
+      new UglifyJsPlugin()
+    ]
   }
 }

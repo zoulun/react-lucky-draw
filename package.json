@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server",
-    "build": "webpack --config webpack.config.pro.js"
+    "build": "webpack --config webpack.config.pro.js --profile --progress --colors --display-error-details"
   },
   "author": "",
   "license": "ISC",

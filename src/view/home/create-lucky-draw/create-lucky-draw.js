@@ -43,8 +43,8 @@ export default class CreateLuckyDrawName extends Component {
             </li>
           </ul>
           <div className="footer">
-            <Button type="primary" onClick={() => hanlderMovePage(2)} disabled={isDisabled}>创建并前往抽奖页</Button>
             <Button type="primary" onClick={() => hanlderMovePage(3)}>前往中奖名单</Button>
+            <Button type="primary" onClick={() => hanlderMovePage(2)} disabled={isDisabled}>创建并前往抽奖页</Button>
           </div>
         </div>
       </div>
