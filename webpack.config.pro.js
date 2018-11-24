@@ -1,22 +1,16 @@
-const webpack = require('webpack');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const NODE_ENV = process.env.NODE_ENV || 'production';
-
 
 module.exports = {
   mode: 'production',
   entry: './src/app.js',
   output: {
-    // path: path.resolve(__dirname, './dist'),
-    // filename: '[name].js'
-
     path: path.resolve(__dirname, './dist'),
-    // publicPath: '../',
     filename: 'js/[name].[hash:8].js',
     chunkFilename: 'js/[name].[chunkhash:8].js'
   },
@@ -47,8 +41,8 @@ module.exports = {
           {
             loader: 'image-webpack-loader',
             options: {
-              bypassOnDebug: true, // webpack@1.x
-              disable: true, // webpack@2.x and newer
+              bypassOnDebug: true,
+              disable: true,
             },
           },
         ]
@@ -64,18 +58,6 @@ module.exports = {
       'lib': path.resolve(__dirname, './src/lib')
     }
   },
-  plugins: [
-    new CleanWebpackPlugin(['./dist']),
-    new HtmlWebpackPlugin({
-      title: 'react demo',
-      template: './src/index.html',
-      minify: 'production'
-    }),
-    new MiniCssExtractPlugin({
-      filename: 'css/[name].[hash].css',
-      chunkFilename: 'css/[id].[hash].css',
-    })
-  ],
   optimization: {
     splitChunks: {
       cacheGroups: {
@@ -99,5 +81,24 @@ module.exports = {
     minimizer: [
       new UglifyJsPlugin()
     ]
-  }
+  },
+  plugins: [
+    new CleanWebpackPlugin(['./dist']),
+    new HtmlWebpackPlugin({
+      title: 'react demo',
+      template: './src/index.html',
+      minify: 'production'
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].[hash].css',
+      chunkFilename: 'css/[id].[hash].css',
+    }),
+    // new CompressionWebpackPlugin({
+    //   test: /\.js$/i,
+    //   filename: '[path].gz[query]',
+    //   algorithm: 'gzip',
+    //   threshold: 1000
+    // }),
+    // new BundleAnalyzerPlugin()
+  ]
 }

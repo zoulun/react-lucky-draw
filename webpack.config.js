@@ -1,16 +1,54 @@
 const webpack = require('webpack');
-const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = merge(common, {
+module.exports = {
   // devtool: 'cheap-module-eval-source-map',
   mode: 'development',
+  entry: './src/app.js',
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: '[name].js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: ['babel-loader'],
+      },
+      {
+        test: /\.l?[ec]ss$/,
+        use: ['style-loader', 'css-loader', 'less-loader']
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/,
+        use: ['file-loader']
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.js', '.less'],
+    alias: {
+      'common': path.resolve(__dirname, './src/common'),
+      'components': path.resolve(__dirname, './src/components'),
+      'containers': path.resolve(__dirname, './src/containers'),
+      'lib': path.resolve(__dirname, './src/lib')
+    }
+  },
   devServer: {
+    port: 8080,
     host: '0.0.0.0',
-    hot: true
+    open: true,
+    hot: true,
+    compress: true
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      title: 'react',
+      template: './src/index.html'
+    }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ]
-});
+};
