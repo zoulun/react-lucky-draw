@@ -5,12 +5,13 @@ import LuckyDraw from "./lucky-draw/lucky-draw";
 import ExportDate from "./export-data/export-data";
 import { message } from "antd";
 
-import "./home.less";
+import "./app.less";
+import { hot } from "react-hot-loader";
 
 /**
  * 抽奖首页
  */
-export default class Home extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -91,7 +92,7 @@ export default class Home extends Component {
   render() {
     let { data, luckyDrawName, steps } = this.state;
     return (
-      <div className="home">
+      <div className="app">
         {
           steps === 1 &&
           <CreateLuckyDraw
@@ -116,3 +117,5 @@ export default class Home extends Component {
     )
   }
 }
+
+export default hot(module)(App);

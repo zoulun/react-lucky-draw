@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   // devtool: 'cheap-module-eval-source-map',
   mode: 'development',
-  entry: './src/app.js',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: '[name].js'
@@ -33,7 +33,8 @@ module.exports = {
       'common': path.resolve(__dirname, './src/common'),
       'components': path.resolve(__dirname, './src/components'),
       'containers': path.resolve(__dirname, './src/containers'),
-      'lib': path.resolve(__dirname, './src/lib')
+      'lib': path.resolve(__dirname, './src/lib'),
+      'view': path.resolve(__dirname, './src/view')
     }
   },
   devServer: {

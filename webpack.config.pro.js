@@ -8,7 +8,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 module.exports = {
   mode: 'production',
-  entry: './src/app.js',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'js/[name].[hash:8].js',
@@ -55,7 +55,8 @@ module.exports = {
       'common': path.resolve(__dirname, './src/common'),
       'components': path.resolve(__dirname, './src/components'),
       'containers': path.resolve(__dirname, './src/containers'),
-      'lib': path.resolve(__dirname, './src/lib')
+      'lib': path.resolve(__dirname, './src/lib'),
+      'view': path.resolve(__dirname, './src/view')
     }
   },
   optimization: {
@@ -79,7 +80,10 @@ module.exports = {
       }
     },
     minimizer: [
-      new UglifyJsPlugin()
+      new UglifyJsPlugin({
+        test: /\.js(\?.*)?$/i,
+        parallel: true
+      })
     ]
   },
   plugins: [
