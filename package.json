@@ -2,13 +2,15 @@
   "name": "react-lucky-draw",
   "version": "1.0.0",
   "description": "",
-  "private": true,
-  "scripts": {
-    "dev": "webpack-dev-server",
-    "build": "webpack --config webpack.config.pro.js --profile --progress --colors --display-error-details"
+  "main": "index.js",
+  "dependencies": {
+    "antd": "^3.10.7",
+    "history": "^4.7.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.3.1",
+    "xlsx": "^0.14.1"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.26.3",
@@ -39,12 +41,18 @@
     "webpack-dev-server": "^3.1.5",
     "webpack-merge": "^4.1.4"
   },
-  "dependencies": {
-    "antd": "^3.10.7",
-    "history": "^4.7.2",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-router-dom": "^4.3.1",
-    "xlsx": "^0.14.1"
-  }
+  "scripts": {
+    "dev": "webpack-dev-server",
+    "build": "webpack --config webpack.config.pro.js --profile --progress --colors --display-error-details"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoulun/react-lucky-draw.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zoulun/react-lucky-draw/issues"
+  },
+  "homepage": "https://github.com/zoulun/react-lucky-draw#readme"
 }
