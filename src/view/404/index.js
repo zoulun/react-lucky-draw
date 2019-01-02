@@ -5,6 +5,6 @@ export default class NotFound extends React.Component {
     super(props);
   }
   render() {
-    return <h1>404</h1>
+    return <h1 className="notfound">404</h1>
   }
 }

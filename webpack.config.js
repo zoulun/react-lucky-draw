@@ -8,7 +8,8 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: '[name].js'
+    filename: '[name].js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -38,11 +39,12 @@ module.exports = {
     }
   },
   devServer: {
-    port: 8888,
+    port: 8880,
     host: '0.0.0.0',
     open: true,
     hot: true,
-    compress: true
+    compress: true,
+    historyApiFallback: true
   },
   plugins: [
     new HtmlWebpackPlugin({
