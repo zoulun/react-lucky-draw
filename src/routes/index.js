@@ -7,7 +7,7 @@ import NotFound from "view/404/index";
 export default function router() {
   return (
     <Switch>
-      <Route path="/app" component={App} />
+      <Route exact path="/" component={App} />
       <Route path="/404" component={NotFound} />
     </Switch>
   )
