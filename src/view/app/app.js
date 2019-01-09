@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import XLSX from "xlsx";
 import CreateLuckyDraw from "./create-lucky-draw/create-lucky-draw";
 import LuckyDraw from "./lucky-draw/lucky-draw";
@@ -91,6 +92,23 @@ class App extends Component {
 
   render() {
     let { data, luckyDrawName, steps } = this.state;
+    let arr = [{ a: 1 }, { b: 2 }, { c: 3 }]
+    let arrIterator = arr[Symbol.iterator]()
+    arrIterator.next();
+    arrIterator.next();
+    arrIterator.next();
+    arrIterator.next();
+    function* loadUI() {
+      console.log('1')
+      yield console.log('2')
+      console.log('3')
+    }
+    var loader = loadUI();
+    // 加载UI
+    loader.next()
+    
+    // 卸载UI
+    loader.next()
     return (
       <div className="app">
         {
@@ -118,4 +136,6 @@ class App extends Component {
   }
 }
 
-export default hot(module)(App);
+// const hotApp = hot(module)(App)
+// export default hot(module)(App);
+export default connect()(hot(module)(App))
