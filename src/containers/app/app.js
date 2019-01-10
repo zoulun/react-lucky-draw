@@ -92,45 +92,30 @@ class App extends Component {
 
   render() {
     let { data, luckyDrawName, steps } = this.state;
-    let arr = [{ a: 1 }, { b: 2 }, { c: 3 }]
-    let arrIterator = arr[Symbol.iterator]()
-    arrIterator.next();
-    arrIterator.next();
-    arrIterator.next();
-    arrIterator.next();
-    function* loadUI() {
-      console.log('1')
-      yield console.log('2')
-      console.log('3')
-    }
-    var loader = loadUI();
-    // 加载UI
-    loader.next()
-    
-    // 卸载UI
-    loader.next()
     return (
       <div className="app">
-        {
-          steps === 1 &&
-          <CreateLuckyDraw
-            data={data}
-            onChangeFile={this.onChangeFile}
-            onChangeLuckyName={this.onChangeLuckyName}
-            luckyDrawName={luckyDrawName}
-            hanlderMovePage={this.hanlderMovePage}
-          />
-        }
-        {
-          steps === 2 && <LuckyDraw />
-        }
-        {
-          steps === 3 && <ExportDate
-            data={data}
-            hanlderExportData={this.hanlderExportData}
-            hanlderMovePage={this.hanlderMovePage}
-          />
-        }
+        <div className="app-container">
+          {
+            steps === 1 &&
+            <CreateLuckyDraw
+              data={data}
+              onChangeFile={this.onChangeFile}
+              onChangeLuckyName={this.onChangeLuckyName}
+              luckyDrawName={luckyDrawName}
+              hanlderMovePage={this.hanlderMovePage}
+            />
+          }
+          {
+            steps === 2 && <LuckyDraw />
+          }
+          {
+            steps === 3 && <ExportDate
+              data={data}
+              hanlderExportData={this.hanlderExportData}
+              hanlderMovePage={this.hanlderMovePage}
+            />
+          }
+        </div>
       </div>
     )
   }

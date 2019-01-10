@@ -1,10 +1,37 @@
+.app::before {
+  position: absolute;
+  display: block;
+  content: '';
+  top: 0;
+  width: 0;
+  height: 0;
+  border-bottom: 100vh solid rgb(129, 158, 175);
+  border-right: 100vw solid transparent;
+}
+
+.app::after {
+  position: absolute;
+  display: block;
+  content: '';
+  top: 0;
+  width: 0;
+  height: 0;
+  border-top: 100vh solid rgb(188, 209, 216);
+  border-left: 100vw solid transparent;
+}
+
 .app {
   width: 100%;
   height: 100%;
-  position: absolute;
-  background: url('../../lib/images/bg.jpg') no-repeat;
+  position: absolute; // background: url('../../lib/images/bg.jpg') no-repeat;
   background-size: cover;
   font-size: 14px;
+  .app-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
   .create-lucky-draw-container,
   .export-data-container {
     height: 100%;

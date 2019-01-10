@@ -4,9 +4,10 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
 import RouteConfig from "./routes/index";
+import reducer from './reducer'
 import "./lib/css/style";
 
-const store = createStore(() => { return { funs: 1 } });
+const store = createStore(reducer);
 
 ReactDOM.render(
   <Provider store={store}>
