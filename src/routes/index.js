@@ -1,8 +1,8 @@
 
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import App from "view/app/app";
-import NotFound from "view/404/index";
+import App from "containers/app/app";
+import NotFound from "containers/404/index";
 
 export default function router() {
   return (
