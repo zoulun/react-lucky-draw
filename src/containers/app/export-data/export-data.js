@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Input, Button, Select } from "antd";
+import { message, Button, Select } from "antd";
+import XLSX from "xlsx";
 
 const Option = Select.Option;
 
@@ -11,8 +12,23 @@ export default class ExportData extends Component {
     super(props)
   }
 
+   /**
+   * 导出数据
+   */
+  hanlderExportData = () => {
+    let { data } = this.props;
+    if (data.length) {
+      const ws = XLSX.utils.aoa_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
+      XLSX.writeFile(wb, "中奖名单.xlsx");
+    } else {
+      message.warning('没有可导入的数据！');
+    }
+  }
+
   render() {
-    const { hanlderExportData, hanlderMovePage } = this.props
+    const { hanlderMovePage } = this.props
     return (
       <div className="export-data-container">
         <div className="center-warpper">
@@ -39,7 +55,7 @@ export default class ExportData extends Component {
           </ul>
           <div className="footer">
             <Button type="primary" onClick={() => hanlderMovePage(1)}>返回</Button>
-            <Button type="primary" onClick={hanlderExportData}>点击导出中奖名单</Button>
+            <Button type="primary" onClick={this.hanlderExportData}>点击导出中奖名单</Button>
           </div>
         </div>
       </div>

@@ -1,38 +1,150 @@
 import React, { Component } from "react";
-import { Input, Button } from "antd";
+import { Input, Button, message } from "antd";
+import XLSX from "xlsx";
+import Phaser from "components/phaser/phaser"
 
-const SheetJSFT = ["xlsx", "xlsb", "xlsm", "xls"].map(function (x) { return "." + x; }).join(",");
+const SheetJSFT = ["xlsx", "xlsb", "xlsm", "xls"].map(function (x) { return "." + x; }).join(","),
+  makeCols = Symbol('makeCols'),
+  prize = { prizeLevel: '', prizeName: '', prizeNum: '' }
 
 /**
  * 创建抽奖名组件
  */
 export default class CreateLuckyDrawName extends Component {
   constructor(props) {
-    super(props)
-  }
-
-  /**
-   * 导入抽奖名单
-   */
-  onChangeFile = (e) => {
-    const { onChangeFile } = this.props,
-      files = e.target.files;
-    if (files && files[0]) {
-      onChangeFile(files[0])
+    super(props);
+    this.state = {
+      luckyDrawName: '',
+      luckyContent: [
+        { ...prize, id: +new Date }
+      ],
+      data: []
     }
   }
 
+  //  输入抽奖名称
+  onChangeLuckyName = (e) => {
+    this.setState({
+      luckyDrawName: e.target.value
+    })
+  }
+
+  //  导入抽奖名单
+  onChangeFile = (e) => {
+    let file = e.target.files[0];
+    const reader = new FileReader();
+    const rABS = !!reader.readAsBinaryString;
+    reader.onload = (e) => {
+      const bstr = e.target.result;
+      const wb = XLSX.read(bstr, { type: rABS ? 'binary' : 'array' });
+      const wsname = wb.SheetNames[0];
+      const ws = wb.Sheets[wsname];
+      const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      this.setState({
+        data: data,
+        cols: this[makeCols](ws['!ref'])
+      }, () => {
+        console.log(this.state.data);
+        // let { data } = this.state;
+        // data.length > 2 && data.pop();
+        // this.setState({
+        //   data
+        // });
+      });
+      message.success('导入数据成功！');
+    };
+    if (rABS) reader.readAsBinaryString(file); else reader.readAsArrayBuffer(file);
+  }
+
+  [makeCols] = refstr => {
+    let o = [], C = XLSX.utils.decode_range(refstr).e.c + 1;
+    for (var i = 0; i < C; ++i) o[i] = { name: XLSX.utils.encode_col(i), key: i }
+    return o;
+  };
+
+  //  渲染奖级、奖品名、个数  内容
+  createluckyContent = () => {
+    let { luckyContent } = this.state;
+    return luckyContent.map((item, index) => {
+      return <Phaser className="phaser-content" data={luckyContent} key={item.id} index={index} onChangeAdd={this.onChangeAdd} onChangeMove={this.onChangeMove}>
+        <Input placeholder="请输入奖级" onChange={(e) => this.onChangeContent(e, index, 'prizeLevel')} />
+        <Input placeholder="请输入奖品名称" onChange={(e) => this.onChangeContent(e, index, 'prizeName')} />
+        <Input placeholder="请输入奖级数量" onChange={(e) => this.onChangeContent(e, index, 'prizeNum')} />
+      </Phaser>
+    });
+  }
+
+  //  新增奖级内容
+  onChangeAdd = () => {
+    let { luckyContent } = this.state;
+    luckyContent.push({ ...prize, id: +new Date });
+    this.setState({
+      luckyContent
+    })
+  }
+
+  //  移除奖级内容
+  onChangeMove = (e, index) => {
+    let { luckyContent } = this.state;
+    luckyContent.splice(index, 1);
+    this.setState({
+      luckyContent
+    })
+  }
+
+  //  抽奖内容change
+  onChangeContent = (e, index, type) => {
+    let { luckyContent } = this.state;
+    luckyContent[index][type] = e.target.value;
+    this.setState({
+      luckyContent
+    })
+  }
+
+  createLuckyDraw = () => {
+    let { data, luckyContent, luckyDrawName } = this.state;
+    const { createLuckyDraw } = this.props;
+    if (!luckyDrawName) {
+      message.warning('请输入抽奖名称！')
+      return
+    }
+    for (let i = 0; i < luckyContent.length; i++) {
+      let item = luckyContent[i];
+      for (let cur in item) {
+        if (!item[cur]) {
+          message.warning('奖级、奖品名、数量不能为空！')
+          return
+        }
+      }
+    }
+    if (data.length <= 0) {
+      message.warning('请导入数据！')
+      return
+    }
+    let luckyData = {
+      luckyDrawName,
+      luckyContent,
+      data
+    }
+    createLuckyDraw(luckyData)
+  }
+
   render() {
-    const { data, onChangeLuckyName, luckyDrawName, hanlderMovePage } = this.props;
-    let isDisabled = data.length <= 0 || !luckyDrawName;
+    const { hanlderMovePage } = this.props;
     return (
       <div className="create-lucky-draw-container">
         <div className="create-lucky-draw center-warpper">
           <h3 className="title">创建抽奖</h3>
           <ul className="form-list">
             <li className="lucky-draw-name">
-              <label htmlFor="">抽奖名称：</label>
-              <Input placeholder="请输入创建的抽奖名" onChange={onChangeLuckyName} />
+              <label htmlFor="">名称：</label>
+              <Input placeholder="请输入创建的抽奖名" onChange={this.onChangeLuckyName} />
+            </li>
+            <li className="lucky-content">
+              <label htmlFor="">内容：</label>
+              <div className="lucky-content-warpper">
+                {this.createluckyContent()}
+              </div>
             </li>
             <li className="import-data">
               <label htmlFor="">导入人员名单：</label>
@@ -44,7 +156,7 @@ export default class CreateLuckyDrawName extends Component {
           </ul>
           <div className="footer">
             <Button type="primary" onClick={() => hanlderMovePage(3)}>前往中奖名单</Button>
-            <Button type="primary" onClick={() => hanlderMovePage(2)} disabled={isDisabled}>创建并前往抽奖页</Button>
+            <Button type="primary" onClick={this.createLuckyDraw}>创建并前往抽奖页</Button>
           </div>
         </div>
       </div>

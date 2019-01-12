@@ -44,7 +44,7 @@
     border: 1px solid #eee;
     box-shadow: 0 0 3px 3px #ccc;
     border-radius: 4px;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.9);
     .title {
       text-align: center;
       font-size: 16px;
@@ -53,16 +53,27 @@
     }
     .form-list {
       li {
+        display: flex;
         margin-bottom: 20px;
         label {
-          width: 105px;
-          display: inline-block;
+          flex: 0 0 105px;
         }
       }
-      .lucky-draw-name {
-        input {
-          width: 200px;
-          display: inline-block;
+      .lucky-draw-name {}
+      .lucky-content {
+        .lucky-content-warpper {
+          max-height: 150px;
+          overflow-y: auto;
+        }
+        .react-phaser-item:not(:first-child) {
+          margin-top: 10px;
+        }
+        .phaser-content {
+          display: flex;
+          justify-content: space-between;
+          input {
+            flex: 0 0 30%;
+          }
         }
       }
       .import-data {
@@ -90,13 +101,48 @@
     }
   }
   .lucky-draw-container {
+    padding: 40px 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
     .lucky-draw-warpper {
-      padding: 40px;
       .lucky-draw-title {
         text-align: center;
         color: #fff;
-        font-size: 18px;
+        font-size: 40px;
       }
+    }
+    .prize-list {
+      margin: 20px 0;
+      text-align: center;
+    }
+    .lucky-draw-content {
+      width: 300px;
+      margin: auto;
+      text-align: center;
+      .prize-name {
+        font-size: 20px;
+        margin: 20px 0;
+      }
+      .prize-num {
+        margin: 20px 0;
+      }
+      .start {
+        margin-top: 20px;
+      }
+    }
+    .lucky-draw-footer {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      padding: 20px;
+      position: absolute;
+      bottom: 0;
+      .back {
+        position: absolute;
+        left: 20px;
+      }
+      .footer-center {}
     }
   }
 }
