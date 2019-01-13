@@ -16,15 +16,15 @@ export default class ExportData extends Component {
    * 导出数据
    */
   hanlderExportData = () => {
-    let { data } = this.props;
-    if (data.length) {
-      const ws = XLSX.utils.aoa_to_sheet(data);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
-      XLSX.writeFile(wb, "中奖名单.xlsx");
-    } else {
-      message.warning('没有可导入的数据！');
-    }
+    // let { data } = this.props;
+    // if (data.length) {
+    //   const ws = XLSX.utils.aoa_to_sheet(data);
+    //   const wb = XLSX.utils.book_new();
+    //   XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
+    //   XLSX.writeFile(wb, "中奖名单.xlsx");
+    // } else {
+    //   message.warning('没有可导入的数据！');
+    // }
   }
 
   render() {

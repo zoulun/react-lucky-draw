@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Button, message } from "antd";
 import UserDetailList from "components/user-detail-list/user-detail-list"
 import './random-shake.less';
 
@@ -9,32 +10,49 @@ export default class RandomShake extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      resultData: []
+      resultData: [],
+      luckydrawStatus: null  //  -1：未开始；0：暂停；1：开始
     }
     this.timer = null
+    this.random = null
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { data } = nextProps;
-    if (nextProps.status && nextProps.status !== null) {
+  //  开始/停止抽奖
+  handleStart = () => {
+    const { data, remainNum } = this.props;
+    let { luckydrawStatus } = this.state;
+    if (remainNum <= 0) {
+      return;
+    }
+
+    if (data.length < 2) {
+      message.warning('人数不足！')
+      return
+    }
+
+    if (!luckydrawStatus) {
       clearInterval(this.timer);
       this.timer = setInterval(() => {
-        let random = parseInt(Math.random() * data.length - 1) + 1;
+        this.random = parseInt(Math.random() * data.length - 1) + 1;
         this.setState({
-          resultData: data[random]
+          resultData: data[this.random]
         });
-        // this.props.resultCallBack(data[random]);
       });
     } else {
       clearInterval(this.timer);
+      this.props.resultCallBack(this.state.resultData, this.random);
     }
+    this.setState({
+      luckydrawStatus: !luckydrawStatus
+    })
   }
 
   render() {
-    let { resultData } = this.state;
+    let { resultData, luckydrawStatus } = this.state;
     return (
       <div className="random-container">
         <UserDetailList data={resultData} />
+        <Button className="start" size="large" onClick={this.handleStart}>{luckydrawStatus && luckydrawStatus !== null ? '停止' : '开始'}抽奖</Button>
       </div>
     )
   }

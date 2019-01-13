@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Input, Button, message } from "antd";
 import XLSX from "xlsx";
+import { setSheetHeadNameIndex, saveImportSheetData, createLuckyDrawData, clearCurrentPrizeData } from "srcredux/lucky-redux"
 import Phaser from "components/phaser/phaser"
 
 const SheetJSFT = ["xlsx", "xlsb", "xlsm", "xls"].map(function (x) { return "." + x; }).join(","),
@@ -10,7 +12,7 @@ const SheetJSFT = ["xlsx", "xlsb", "xlsm", "xls"].map(function (x) { return "." 
 /**
  * 创建抽奖名组件
  */
-export default class CreateLuckyDrawName extends Component {
+class CreateLuckyDrawName extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,16 +42,19 @@ export default class CreateLuckyDrawName extends Component {
       const wsname = wb.SheetNames[0];
       const ws = wb.Sheets[wsname];
       const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      let isName = data[0].some((item, index) => {
+        if (item === '姓名' || item === '名字') {
+          this.props.setSheetHeadNameIndex(index)
+        }
+        return item === '姓名' || item === '名字';
+      })
+      if (!isName) {
+        message.warning('导入的数据没有姓名或名字！');
+        return;
+      }
       this.setState({
         data: data,
         cols: this[makeCols](ws['!ref'])
-      }, () => {
-        console.log(this.state.data);
-        // let { data } = this.state;
-        // data.length > 2 && data.pop();
-        // this.setState({
-        //   data
-        // });
       });
       message.success('导入数据成功！');
     };
@@ -103,7 +108,7 @@ export default class CreateLuckyDrawName extends Component {
 
   createLuckyDraw = () => {
     let { data, luckyContent, luckyDrawName } = this.state;
-    const { createLuckyDraw } = this.props;
+    const { createLuckyDraw, saveImportSheetData, createLuckyDrawData } = this.props;
     if (!luckyDrawName) {
       message.warning('请输入抽奖名称！')
       return
@@ -123,10 +128,20 @@ export default class CreateLuckyDrawName extends Component {
     }
     let luckyData = {
       luckyDrawName,
-      luckyContent,
-      data
+      luckyContent
     }
-    createLuckyDraw(luckyData)
+    saveImportSheetData(data)
+    createLuckyDrawData(luckyData)
+    //  创建前清空之前本地缓存数据
+    this._clearData()
+    createLuckyDraw()
+  }
+
+  //  清空数据
+  _clearData = () => {
+    localStorage.removeItem('lucky')
+    localStorage.removeItem('export-prizet-data')
+    this.props.clearCurrentPrizeData()
   }
 
   render() {
@@ -163,3 +178,5 @@ export default class CreateLuckyDrawName extends Component {
     )
   }
 }
+
+export default connect(null, { setSheetHeadNameIndex, saveImportSheetData, createLuckyDrawData, clearCurrentPrizeData })(CreateLuckyDrawName);

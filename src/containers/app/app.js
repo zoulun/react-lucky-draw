@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import CreateLuckyDraw from "./create-lucky-draw/create-lucky-draw";
 import LuckyDraw from "./lucky-draw/lucky-draw";
 import ExportDate from "./export-data/export-data";
+import ThemeStyle from "components/theme-style/theme-style";
 import "./app.less";
 import { hot } from "react-hot-loader";
 
@@ -13,8 +14,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      steps: 1,
-      createLuckyDrawData: null
+      steps: 1
     }
   }
 
@@ -28,17 +28,14 @@ class App extends Component {
   }
 
   //  创建抽奖
-  createLuckyDraw = (data) => {
-    this.setState({
-      createLuckyDrawData: data
-    })
+  createLuckyDraw = () => {
     this.setState({
       steps: 2
     })
   }
 
   render() {
-    let { steps, createLuckyDrawData } = this.state;
+    let { steps } = this.state;
     return (
       <div className="app">
         <div className="app-container">
@@ -51,16 +48,15 @@ class App extends Component {
           }
           {
             steps === 2 && <LuckyDraw
-              prizeData={createLuckyDrawData}
               hanlderMovePage={this.hanlderMovePage}
             />
           }
           {
             steps === 3 && <ExportDate
-              data={data}
               hanlderMovePage={this.hanlderMovePage}
             />
           }
+          <ThemeStyle />
         </div>
       </div>
     )

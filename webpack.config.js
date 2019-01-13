@@ -35,7 +35,7 @@ module.exports = {
       'components': path.resolve(__dirname, './src/components'),
       'containers': path.resolve(__dirname, './src/containers'),
       'lib': path.resolve(__dirname, './src/lib'),
-      'view': path.resolve(__dirname, './src/view')
+      'srcredux': path.resolve(__dirname, './src/redux')
     }
   },
   devServer: {
