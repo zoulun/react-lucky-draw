@@ -118,7 +118,7 @@ class LuckyDraw extends Component {
 
   //  导出
   handleExport = () => {
-    let { importSheetData, exportPrizetData, luckyDrawData } = this.props;
+    const { importSheetData, exportPrizetData, luckyDrawData } = this.props;
     let data = JSON.parse(JSON.stringify(exportPrizetData))
     let sheetHead = [...importSheetData[0], '奖级', '奖品']
     data.unshift(sheetHead)
@@ -134,11 +134,11 @@ class LuckyDraw extends Component {
 
   //  保存抽奖数据，可在导出页面选择导出
   saveLuckyData = () => {
-    const { luckyDrawData, exportPrizetData, saveLuckyList } = this.props;
+    const { luckyDrawData, importSheetData, exportPrizetData, saveLuckyList } = this.props;
     let obj = {
       id: this.luckyId,
       luckyDrawName: luckyDrawData.luckyDrawName,
-      lucky: exportPrizetData
+      lucky: [[...importSheetData[0], '奖级', '奖品'], ...exportPrizetData]
     }
     let luckyList = JSON.parse(localStorage.getItem('lucky-list') || '[]')
     if (luckyList.length) {
