@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Radio, Button, Drawer } from "antd";
+import { Radio, Button, Drawer, message } from "antd";
 import XLSX from "xlsx";
 import RandomShake from 'components/random-shake/random-shake';
 import ResultList from "components/result-list/result-list"
-import { setPrizeList, saveImportSheetData, saveExportPrizetData, clearCurrentPrizeData } from "srcredux/lucky-redux"
+import { setPrizeList, saveImportSheetData, saveExportPrizetData, clearCurrentPrizeData, saveLuckyList } from "srcredux/lucky-redux"
 
 /**
  * 抽奖页组件
@@ -16,8 +16,9 @@ class LuckyDraw extends Component {
     this.state = {
       currentPrize: luckyContent[luckyContent.length - 1],
       winners: {},
-      visibleResult: false
+      visibleResult: false,
     }
+    this.luckyId = new Date().getTime()
   }
 
   //  奖级列表
@@ -71,9 +72,12 @@ class LuckyDraw extends Component {
     }
     let tempExportData = JSON.parse(JSON.stringify(importSheetData))
     tempExportData.splice(index, 1)
+    //  已抽过的人员移除后重新写入redux
     saveImportSheetData(tempExportData)
     let exportData = [...exportPrizetData, [...data, currentPrize.prizeLevel, currentPrize.prizeName]]
+    //  当前中奖名单存入redux（最终导出的名单列表）
     saveExportPrizetData(exportData)
+    //  中奖列表
     setPrizeList(localStg)
     localStorage.setItem('lucky', JSON.stringify(localStg))
     localStorage.setItem('export-prizet-data', JSON.stringify(exportData))
@@ -87,6 +91,7 @@ class LuckyDraw extends Component {
     localStorage.removeItem('lucky')
     localStorage.removeItem('export-prizet-data')
     this.props.clearCurrentPrizeData()
+    message.success('成功清空数据！')
   }
 
   //  显示抽奖结果面板
@@ -127,6 +132,33 @@ class LuckyDraw extends Component {
     }
   }
 
+  //  保存抽奖数据，可在导出页面选择导出
+  saveLuckyData = () => {
+    const { luckyDrawData, exportPrizetData, saveLuckyList } = this.props;
+    let obj = {
+      id: this.luckyId,
+      luckyDrawName: luckyDrawData.luckyDrawName,
+      lucky: exportPrizetData
+    }
+    let luckyList = JSON.parse(localStorage.getItem('lucky-list') || '[]')
+    if (luckyList.length) {
+      let currentIndex = luckyList.findIndex((item, index) => {
+        return item.id === this.luckyId
+      })
+      if (currentIndex > -1) {
+        luckyList[currentIndex] = obj
+      } else {
+        luckyList.push(obj)
+      }
+    } else {
+      luckyList.push(obj)
+    }
+
+    saveLuckyList(luckyList)
+    localStorage.setItem('lucky-list', JSON.stringify(luckyList))
+    message.success('保存成功！')
+  }
+
   render() {
     const { luckyDrawData, importSheetData, hanlderMovePage } = this.props;
     let { currentPrize, luckydrawStatus, visibleResult } = this.state;
@@ -149,8 +181,10 @@ class LuckyDraw extends Component {
           <Button className="back" type="primary" onClick={(e) => hanlderMovePage(1)}>返回</Button>
           <div className="footer-center">
             <Button type="primary" size="large" onClick={this.handleResultPanelStatus}>抽奖结果</Button>
+            <Button type="primary" size="large" onClick={this.saveLuckyData}>保存抽奖模板数据</Button>
+            <span style={{ color: 'red' }}>可在导出页面查询</span>
           </div>
-          <Button type="primary" onClick={this.clearData}>清空数据</Button>
+          <Button type="primary" onClick={this.clearData}>清除当前抽奖数据</Button>
         </div>
         {
           visibleResult &&
@@ -173,5 +207,5 @@ class LuckyDraw extends Component {
 
 export default connect(
   state => state.lucky,
-  { setPrizeList, saveImportSheetData, saveExportPrizetData, clearCurrentPrizeData }
+  { setPrizeList, saveImportSheetData, saveExportPrizetData, clearCurrentPrizeData, saveLuckyList }
 )(LuckyDraw)

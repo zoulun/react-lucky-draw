@@ -5,6 +5,7 @@ const PRIZE_LIST = 'PRIZE_LIST';  //  中奖列表
 const SHEET_HEAD_NAME_INDEX = 'SHEET_HEAD_NAME_INDEX';  //  姓名索引
 const EXPORT_PRIZE_DATA = 'EXPORT_PRIZE_DATA';  //  导出中奖名单数据
 const CLEAR_CURRENT_PRIZE_DATA = 'CLEAR_CURRENT_PRIZE_DATA';  //  清空当前抽奖数据
+const SAVE_LUCKY_LIST = 'SAVE_LUCKY_LIST';  //  保存抽奖模板数据
 
 const initState = {
   themeStyle: {},
@@ -12,7 +13,8 @@ const initState = {
   luckyDrawData: {},
   prizeList: [],
   sheetNameIndex: 0,
-  exportPrizetData: []
+  exportPrizetData: [],
+  luckyList: []
 }
 
 export const lucky = (state = initState, action) => {
@@ -37,6 +39,9 @@ export const lucky = (state = initState, action) => {
       break;
     case CLEAR_CURRENT_PRIZE_DATA:
       return { ...state, exportPrizetData: [] }
+      break;
+    case SAVE_LUCKY_LIST:
+      return { ...state, luckyList: action.luckyList }
       break;
     default:
       return { ...state }
@@ -69,4 +74,8 @@ export const saveExportPrizetData = (data = []) => {
 
 export const clearCurrentPrizeData = () => {
   return { type: CLEAR_CURRENT_PRIZE_DATA }
+}
+
+export const saveLuckyList = (data) => {
+  return { luckyList: data, type: SAVE_LUCKY_LIST }
 }

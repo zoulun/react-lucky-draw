@@ -42,6 +42,10 @@ class CreateLuckyDrawName extends Component {
       const wsname = wb.SheetNames[0];
       const ws = wb.Sheets[wsname];
       const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      if (data.length === 0) {
+        message.warning('没有数据，请重新导入！')
+        return;
+      }
       let isName = data[0].some((item, index) => {
         if (item === '姓名' || item === '名字') {
           this.props.setSheetHeadNameIndex(index)
