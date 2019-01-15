@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Popover } from "antd";
+import { themeData } from "lib/js/default-public"
 import './theme-style.less'
 
 /**
@@ -11,10 +12,13 @@ export default class ThemeStyle extends Component {
   }
 
   render() {
+    const { className = 'len-tj-theme' } = this.props
     return (
       <div className="len-theme-style-container">
-        <div className="circle-left"></div>
-        <div className="circle-right"></div>
+        <div className={`theme-style-content ${className}`}>
+          <div className="circle-left"></div>
+          <div className="circle-right"></div>
+        </div>
       </div>
     )
   }
