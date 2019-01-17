@@ -182,7 +182,7 @@ class LuckyDraw extends Component {
           <div className="footer-center">
             <Button type="primary" size="large" onClick={this.handleResultPanelStatus}>抽奖结果</Button>
             <Button type="primary" size="large" onClick={this.saveLuckyData}>保存抽奖模板数据</Button>
-            <span style={{ color: 'red' }}>可在导出页面查询</span>
+            <span className="desc">（可在导出页面查询）</span>
           </div>
           <Button type="primary" onClick={this.clearData}>清除当前抽奖数据</Button>
         </div>
