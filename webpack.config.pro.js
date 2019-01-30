@@ -89,9 +89,9 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['./dist']),
     new HtmlWebpackPlugin({
-      title: 'react demo',
+      title: 'lucky',
       template: './src/index.html',
-      minify: 'production'
+      favicon: './src/favicon.ico'
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[hash].css',

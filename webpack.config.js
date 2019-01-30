@@ -48,8 +48,9 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'react',
-      template: './src/index.html'
+      title: 'lucky',
+      template: './src/index.html',
+      favicon: './src/favicon.ico'
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
