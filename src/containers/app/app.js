@@ -56,7 +56,7 @@ class App extends Component {
               hanlderMovePage={this.hanlderMovePage}
             />
           }
-          <ThemeStyle />
+          {/* <ThemeStyle /> */}
         </div>
       </div>
     )
