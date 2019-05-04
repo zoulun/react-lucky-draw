@@ -3,6 +3,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -10,7 +11,7 @@ module.exports = {
   mode: 'production',
   entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, './build'),
     filename: 'js/[name].[hash:8].js',
     chunkFilename: 'js/[name].[chunkhash:8].js'
   },
@@ -87,7 +88,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(['./dist']),
+    new CleanWebpackPlugin(['./build']),
     new HtmlWebpackPlugin({
       title: 'lucky',
       template: './src/index.html',
@@ -96,6 +97,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'css/[name].[hash].css',
       chunkFilename: 'css/[id].[hash].css',
+    }),
+    new ManifestPlugin({
+      fileName: 'asset-manifest.json',
     }),
     // new CompressionWebpackPlugin({
     //   test: /\.js$/i,

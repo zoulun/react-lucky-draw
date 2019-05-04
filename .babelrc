@@ -16,8 +16,20 @@
       "import",
       {
         "libraryName": "antd",
-        "libraryDirectory": "es",
         "style": "css"
+      }
+    ],
+    [
+      "module-resolver",
+      {
+        "cwd": "babelrc",
+        "alias": {
+          "common": "./src/common",
+          "components": "./src/components",
+          "containers": "./src/containers",
+          "lib": "./src/lib",
+          "srcredux": "./src/redux"
+        }
       }
     ]
   ]

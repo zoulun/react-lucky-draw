@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Input, Button, message } from "antd";
+// import { Input, Button, message } from "antd";
 import XLSX from "xlsx";
 import { setSheetHeadNameIndex, saveImportSheetData, createLuckyDrawData, clearCurrentPrizeData } from "srcredux/lucky-redux"
 import Phaser from "components/phaser/phaser"
@@ -43,7 +43,7 @@ class CreateLuckyDrawName extends Component {
       const ws = wb.Sheets[wsname];
       const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
       if (data.length === 0) {
-        message.warning('没有数据，请重新导入！')
+        // message.warning('没有数据，请重新导入！')
         return;
       }
       let isName = data[0].some((item, index) => {
@@ -53,14 +53,14 @@ class CreateLuckyDrawName extends Component {
         return item === '姓名' || item === '名字';
       })
       if (!isName) {
-        message.warning('导入的数据没有姓名或名字！');
+        // message.warning('导入的数据没有姓名或名字！');
         return;
       }
       this.setState({
         data: data,
         cols: this[makeCols](ws['!ref'])
       });
-      message.success('导入数据成功！');
+      // message.success('导入数据成功！');
     };
     if (rABS) reader.readAsBinaryString(file); else reader.readAsArrayBuffer(file);
   }
@@ -76,9 +76,9 @@ class CreateLuckyDrawName extends Component {
     let { luckyContent } = this.state;
     return luckyContent.map((item, index) => {
       return <Phaser className="phaser-content" data={luckyContent} key={item.id} index={index} onChangeAdd={this.onChangeAdd} onChangeMove={this.onChangeMove}>
-        <Input placeholder="请输入奖级" onChange={(e) => this.onChangeContent(e, index, 'prizeLevel')} />
-        <Input placeholder="请输入奖品名称" onChange={(e) => this.onChangeContent(e, index, 'prizeName')} />
-        <Input placeholder="请输入奖级数量" onChange={(e) => this.onChangeContent(e, index, 'prizeNum')} />
+        <input placeholder="请输入奖级" onChange={(e) => this.onChangeContent(e, index, 'prizeLevel')} />
+        <input placeholder="请输入奖品名称" onChange={(e) => this.onChangeContent(e, index, 'prizeName')} />
+        <input placeholder="请输入奖级数量" onChange={(e) => this.onChangeContent(e, index, 'prizeNum')} />
       </Phaser>
     });
   }
@@ -114,20 +114,20 @@ class CreateLuckyDrawName extends Component {
     let { data, luckyContent, luckyDrawName } = this.state;
     const { createLuckyDraw, saveImportSheetData, createLuckyDrawData } = this.props;
     if (!luckyDrawName) {
-      message.warning('请输入抽奖名称！')
+      // message.warning('请输入抽奖名称！')
       return
     }
     for (let i = 0; i < luckyContent.length; i++) {
       let item = luckyContent[i];
       for (let cur in item) {
         if (!item[cur]) {
-          message.warning('奖级、奖品名、数量不能为空！')
+          // message.warning('奖级、奖品名、数量不能为空！')
           return
         }
       }
     }
     if (data.length <= 0) {
-      message.warning('请导入数据！')
+      // message.warning('请导入数据！')
       return
     }
     let luckyData = {
@@ -157,7 +157,7 @@ class CreateLuckyDrawName extends Component {
           <ul className="form-list">
             <li className="lucky-draw-name">
               <label htmlFor="">名称：</label>
-              <Input placeholder="请输入创建的抽奖名" onChange={this.onChangeLuckyName} />
+              <input placeholder="请输入创建的抽奖名" onChange={this.onChangeLuckyName} />
             </li>
             <li className="lucky-content">
               <label htmlFor="">内容：</label>
@@ -167,15 +167,15 @@ class CreateLuckyDrawName extends Component {
             </li>
             <li className="import-data">
               <label htmlFor="">导入人员名单：</label>
-              <Button type="primary">
+              <button type="primary">
                 点击导入
                 <input className="import-file" type="file" accept={SheetJSFT} onChange={this.onChangeFile} />
-              </Button>
+              </button>
             </li>
           </ul>
           <div className="footer">
-            <Button type="primary" onClick={() => hanlderMovePage(3)}>前往中奖名单</Button>
-            <Button type="primary" onClick={this.createLuckyDraw}>创建并前往抽奖页</Button>
+            <button type="primary" onClick={() => hanlderMovePage(3)}>前往中奖名单</button>
+            <button type="primary" onClick={this.createLuckyDraw}>创建并前往抽奖页</button>
           </div>
         </div>
       </div>

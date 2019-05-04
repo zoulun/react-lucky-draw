@@ -1,0 +1,391 @@
+.react-phaser-item {
+  position: relative;
+  display: flex;
+}
+.react-phaser-item .react-phaser-btn-group {
+  padding: 0 10px;
+  margin-left: 20px;
+  flex: 0 0 80px;
+  text-align: right;
+}
+.react-phaser-item .react-phaser-btn-group .add {
+  color: #1890ff;
+}
+.react-phaser-item .react-phaser-btn-group .move {
+  color: red;
+}
+.react-phaser-item .react-phaser-btn-group i {
+  font-size: 24px;
+  cursor: pointer;
+}
+.react-phaser-item .react-phaser-btn-group i:not(:first-child) {
+  margin-left: 10px;
+}
+
+.user-detail-list {
+  display: flex;
+  justify-content: space-around;
+  width: 300px;
+  height: 60px;
+  line-height: 60px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 2px 0 #ccc;
+}
+
+.random-container .start {
+  margin-top: 20px;
+}
+
+.len-result-list {
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+.len-result-list .title {
+  font-size: 18px;
+}
+.len-result-list .content-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.len-result-list .content-list li:not(:last-child) {
+  margin-right: 16px;
+}
+
+.len-theme-style-container {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  cursor: pointer;
+}
+.len-theme-style-container .theme-style-content {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.len-theme-style-container .len-tj-theme {
+  animation: rotation 5s linear infinite;
+  -webkit-animation: rotation 5s linear infinite;
+  -moz-animation: rotation 5s linear infinite;
+}
+.len-theme-style-container .len-tj-theme .circle-left,
+.len-theme-style-container .len-tj-theme .circle-right {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1;
+}
+.len-theme-style-container .len-tj-theme .circle-left {
+  background: #bcd1d8;
+  bottom: 0;
+  right: 25%;
+}
+.len-theme-style-container .len-tj-theme .circle-right {
+  background: #819eaf;
+  top: 0;
+  left: 25%;
+}
+.len-theme-style-container .len-tj-theme .circle-left::after,
+.len-theme-style-container .len-tj-theme .circle-right::after {
+  display: block;
+  content: '';
+  width: 50%;
+  height: 50%;
+  background: #819eaf;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+.len-theme-style-container .len-tj-theme .circle-right::after {
+  background: #bcd1d8;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes rotation {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-moz-keyframes rotation {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+.len-theme-style-container .len-tj-theme::before,
+.len-theme-style-container .len-tj-theme::after {
+  display: block;
+  content: '';
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+.len-theme-style-container .len-tj-theme::before {
+  border-radius: 50% 0 0 50%;
+  left: 0;
+  background: #819eaf;
+}
+.len-theme-style-container .len-tj-theme::after {
+  border-radius: 0 50% 50% 0;
+  right: 0;
+  background: #bcd1d8;
+}
+
+.app::before {
+  position: absolute;
+  display: block;
+  content: '';
+  top: 0;
+  width: 0;
+  height: 0;
+  border-bottom: 100vh solid #819eaf;
+  border-right: 100vw solid transparent;
+}
+.app::after {
+  position: absolute;
+  display: block;
+  content: '';
+  top: 0;
+  width: 0;
+  height: 0;
+  border-top: 100vh solid #bcd1d8;
+  border-left: 100vw solid transparent;
+}
+.app {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-size: cover;
+  font-size: 14px;
+}
+.app .app-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.app .create-lucky-draw-container,
+.app .export-data-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.app .center-warpper {
+  padding: 20px 40px;
+  border: 1px solid #eee;
+  box-shadow: 0 0 3px 3px #ccc;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.9);
+}
+.app .center-warpper .title {
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #000;
+}
+.app .center-warpper .form-list li {
+  display: flex;
+  margin-bottom: 20px;
+}
+.app .center-warpper .form-list li label {
+  flex: 0 0 105px;
+}
+.app .center-warpper .form-list .lucky-content .lucky-content-warpper {
+  max-height: 150px;
+  overflow-y: auto;
+}
+.app .center-warpper .form-list .lucky-content .react-phaser-item:not(:first-child) {
+  margin-top: 10px;
+}
+.app .center-warpper .form-list .lucky-content .phaser-content {
+  display: flex;
+  justify-content: space-between;
+}
+.app .center-warpper .form-list .lucky-content .phaser-content input {
+  flex: 0 0 30%;
+}
+.app .center-warpper .form-list .import-data button {
+  position: relative;
+}
+.app .center-warpper .form-list .import-data .import-file {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.app .center-warpper .footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  text-align: center;
+}
+.app .lucky-draw-container {
+  padding: 40px 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.app .lucky-draw-container .lucky-draw-warpper .lucky-draw-title {
+  text-align: center;
+  color: #fff;
+  font-size: 40px;
+}
+.app .lucky-draw-container .prize-list {
+  margin: 20px 0;
+  text-align: center;
+}
+.app .lucky-draw-container .lucky-draw-content {
+  width: 300px;
+  margin: auto;
+  text-align: center;
+}
+.app .lucky-draw-container .lucky-draw-content .prize-name {
+  font-size: 20px;
+  margin: 20px 0;
+}
+.app .lucky-draw-container .lucky-draw-content .prize-num {
+  margin: 20px 0;
+}
+.app .lucky-draw-container .lucky-draw-footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px;
+  position: absolute;
+  bottom: 0;
+}
+.app .lucky-draw-container .lucky-draw-footer .footer-center button {
+  margin-left: 10px;
+}
+.app .lucky-draw-container .lucky-draw-footer .footer-center .desc {
+  font-size: 12px;
+  color: red;
+}
+.result-panel .panel-footer {
+  width: 100%;
+  position: absolute;
+  bottom: 20px;
+  text-align: center;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+body,
+button,
+input,
+select,
+textarea {
+  font: 12px/1.5tahoma, arial, \5b8b\4f53;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+}
+address,
+cite,
+dfn,
+em,
+var {
+  font-style: normal;
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: couriernew, courier, monospace;
+}
+small {
+  font-size: 12px;
+}
+ul,
+ol {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+sup {
+  vertical-align: text-top;
+}
+sub {
+  vertical-align: text-bottom;
+}
+legend {
+  color: #000;
+}
+fieldset,
+img {
+  border: 0;
+}
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
