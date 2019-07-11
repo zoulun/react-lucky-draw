@@ -7,9 +7,22 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+const reactBase = [
+  'react',
+  'react-dom',
+  'redux',
+  'react-redux',
+  'react-router-dom'
+];
+
 module.exports = {
   mode: 'production',
-  entry: './src/index.js',
+  // entry: './src/index.js',
+  entry: {
+    index: './src/index.js',
+    // reactBase,
+    // xlsxVendor: ['xlsx']
+  },
   output: {
     path: path.resolve(__dirname, './build'),
     filename: 'js/[name].[hash:8].js',
@@ -63,20 +76,37 @@ module.exports = {
   optimization: {
     splitChunks: {
       cacheGroups: {
-        default: {
-          minChunks: 2,
-          priority: -20,
+        default: false,
+        // default: {
+        //   minChunks: 2,
+        //   priority: -20,
+        //   reuseExistingChunk: true
+        // },
+        vendorx: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendorx',
+          chunks: 'all',
+          priority: 10,
+          minChunks: 1,
           reuseExistingChunk: true
         },
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
+        reactBase: {
+          test: /[\\/]node_modules[\\/](react|react-dom|redux|react-redux|react-router-dom)[\\/]/,
+          name: 'reactBase',
           chunks: 'all',
+          priority: 20
         },
-        commons: {
-          name: "commons",
-          chunks: "initial",
-          minChunks: 2
+        xlsxVendor: {
+          test: /xlsx/,
+          name: 'xlsxVendor',
+          chunks: 'all',
+          priority: 30
+        },
+        index: {
+          name: "index",
+          chunks: "all",
+          minChunks: 2,
+          priority: 9,
         }
       }
     },
@@ -96,7 +126,7 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[hash].css',
-      chunkFilename: 'css/[id].[hash].css',
+      chunkFilename: 'css/[name].[hash].css',
     }),
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
@@ -107,6 +137,6 @@ module.exports = {
     //   algorithm: 'gzip',
     //   threshold: 1000
     // }),
-    // new BundleAnalyzerPlugin()
+    new BundleAnalyzerPlugin()
   ]
 }
