@@ -45,6 +45,7 @@ class CreateLuckyDrawName extends Component {
 
   //  输入抽奖名称
   onChangeLuckyName = (e) => {
+    console.log('test git pull --rebase')
     this.setState({
       luckyDrawName: e.target.value
     })
